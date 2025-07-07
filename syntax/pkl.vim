@@ -41,6 +41,9 @@ syntax match pklNumber /\v(^|[^A-Za-z0-9_])(\d+(\.\d*)?|\.\d+)/
 syntax match pklBrackets /[{}\[\]()]/
 syntax match pklOperator "[=:+\-*<>]"
 
+" --- Functions ---
+syntax match pklFunction /\<\h\w*\>\ze\s*(\s*)/
+
 " --- Highlight links ---
 hi def link pklBoolean        Boolean
 hi def link pklBrackets       Delimiter
@@ -49,6 +52,7 @@ hi def link pklComment        Comment
 hi def link pklConstant       Constant
 hi def link pklDocComment     Comment
 hi def link pklEscape         SpecialChar
+hi def link pklFunction       Function
 hi def link pklKeyString      Identifier
 hi def link pklKeyword        Keyword
 hi def link pklMiscTypes      Type
