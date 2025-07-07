@@ -19,12 +19,14 @@ syntax match pklEscape /\\./ contained
 syntax match pklKeyString +\v(["']).{-}\1\s*:+
 
 " --- Keywords ---
-syntax keyword pklKeyword module import from as export if else then elif let in match case of type
-      \ class extends implements with object enum interface throws try catch finally throw return
-      \ yield override abstract static final val var fun is this
+syntax keyword pklKeyword module import from as export let in match case of type class 
+      \ extends implements with object enum interface throws try catch finally throw return
+      \ yield override abstract static final val var fun is this outer super local hidden
 
 syntax keyword pklBoolean true false
 syntax keyword pklConstant null
+syntax keyword pklRepeat for while
+syntax keyword pklConditional if else then elif
 
 " --- Data types ---
 syntax keyword pklType UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 
@@ -45,10 +47,12 @@ syntax match pklOperator "[=:+\-*<>]"
 syntax match pklFunction /\<\h\w*\>\ze\s*(\s*)/
 
 " --- Highlight links ---
+hi def link pklRepeat         Repeat
 hi def link pklBoolean        Boolean
 hi def link pklBrackets       Delimiter
 hi def link pklCollections    Type
 hi def link pklComment        Comment
+hi def link pklConditional    Conditional
 hi def link pklConstant       Constant
 hi def link pklDocComment     Comment
 hi def link pklEscape         SpecialChar
