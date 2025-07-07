@@ -23,11 +23,12 @@ syntax keyword pklKeyword module import from as export if else then elif let in 
       \ class extends implements with object enum interface throws try catch finally throw return
       \ yield override abstract static final val var fun is this
 
-syntax keyword pklBuiltin true false null
+syntax keyword pklBoolean true false
+syntax keyword pklConstant null
 
 " --- Data types ---
 syntax keyword pklType UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 
-      \ String Float Boolean Null Number
+      \ String Float Boolean Number
 syntax keyword pklCollections List Listing Set Map Mapping
 syntax keyword pklObjectTypes Dynamic Typed Pair Any Nothing unknown Regex T
 syntax keyword pklMiscTypes Duration DataSize
@@ -41,9 +42,11 @@ syntax match pklBrackets /[{}\[\]()]/
 syntax match pklOperator "[=:+\-*<>]"
 
 " --- Highlight links ---
+hi def link pklBoolean        Boolean
 hi def link pklBrackets       Delimiter
 hi def link pklCollections    Type
 hi def link pklComment        Comment
+hi def link pklConstant       Constant
 hi def link pklDocComment     Comment
 hi def link pklEscape         SpecialChar
 hi def link pklKeyString      Identifier
