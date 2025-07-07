@@ -26,13 +26,15 @@ syntax keyword pklKeyword module import from as export if else then elif let in 
 syntax keyword pklBuiltin true false null
 
 " --- Data types ---
-syntax keyword pklType UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 String Float Boolean Null Number
+syntax keyword pklType UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 
+      \ String Float Boolean Null Number
 syntax keyword pklCollections List Listing Set Map Mapping
 syntax keyword pklObjectTypes Dynamic Typed Pair Any Nothing unknown Regex T
 syntax keyword pklMiscTypes Duration DataSize
 
 " --- Numbers ---
-syntax match pklNumber /\v(\d+\.\d*|\d*\.\d+|\d+)/
+syntax match pklNumber /\v(^|[^A-Za-z0-9_])(\d+(\.\d*)?|\.\d+)/ 
+      \ containedin=ALLBUT,pklType,pklComment,pklDocComment
 
 " --- Brackets and punctuation ---
 syntax match pklBrackets /[{}\[\]()]/
