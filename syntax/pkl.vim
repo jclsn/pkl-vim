@@ -49,7 +49,6 @@ syntax match pklOperator "[=:+\-*<>]"
 syntax match pklFunction /\<\h\w*\>\ze\s*(\s*)/
 
 " --- Highlight links ---
-hi def link pklRepeat         Repeat
 hi def link pklBoolean        Boolean
 hi def link pklBrackets       Delimiter
 hi def link pklCollections    Type
@@ -59,14 +58,15 @@ hi def link pklConstant       Constant
 hi def link pklDocComment     Comment
 hi def link pklEscape         SpecialChar
 hi def link pklFunction       Function
+hi def link pklInclude        Include
 hi def link pklKeyString      Identifier
 hi def link pklKeyword        Keyword
-hi def link pklInclude        Include
 hi def link pklMiscTypes      Type
 hi def link pklNumber         Number
-hi def link pklProtected      Special
 hi def link pklObjectTypes    Type
 hi def link pklOperator       Operator
+hi def link pklProtected      Special
+hi def link pklRepeat         Repeat
 hi def link pklString         String
 hi def link pklType           Type
 
