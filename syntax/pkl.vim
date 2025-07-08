@@ -13,12 +13,12 @@ syntax region pklMultiComment start=/\/\*/ end=/\*\// keepend
 
 " --- Strings ---
 " Match strings not followed by colon → regular value string
-syntax region pklString start=+"+ skip=+\\."+ end=+"+ nextgroup=pklColon skipwhite
-      \ contains=pklEscape keepend
 syntax match pklEscape /\\./ contained
+syntax region pklString start=+"+ skip=+\\."+ end=+"+ contains=pklEscape keepend oneline
+syntax region pklMultiString start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape keepend
 
 " Match object keys → "key": or 'key':
-syntax match pklKeyString +\v(["']).{-}\1\s*:+
+syntax match pklKeyString +\v(["']).{-}\1\s*/+
 
 " --- Keywords ---
 syntax keyword pklKeyword let in match of type class implements with object enum interface throws
@@ -40,8 +40,9 @@ syntax keyword pklObjectTypes Dynamic Typed Pair Any Nothing unknown Regex T
 syntax keyword pklMiscTypes Duration DataSize
 
 " --- Numbers ---
-syntax match pklNumber /\v(^|[^A-Za-z0-9_])(\d+(\.\d*)?|\.\d+)/ 
-      \ containedin=ALLBUT,pklType,pklComment,pklDocComment
+" syntax match pklNumber /\v(^|[^A-Za-z0-9_])(\d+(\.\d*)?|\.\d+)/ 
+syntax match pklNumber /\v<(\d+\.\d*|\d*\.\d+|\d+)>/
+      \ containedin=ALLBUT,pklComment,pklDocComment,pklString,pklMultiString
 
 " --- Brackets and punctuation ---
 syntax match pklBrackets /[{}\[\]()]/
@@ -65,6 +66,7 @@ hi def link pklKeyString      Identifier
 hi def link pklKeyword        Keyword
 hi def link pklMiscTypes      Type
 hi def link pklMultiComment   Comment
+hi def link pklMultiString    String
 hi def link pklNumber         Number
 hi def link pklObjectTypes    Type
 hi def link pklOperator       Operator
