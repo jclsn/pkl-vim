@@ -49,7 +49,7 @@ syntax keyword pklObjectTypes  Dynamic Typed Pair Any unknown Regex T
 
 " --- Numbers ---
 syntax match pklNumber /\v<0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|(\d+\.\d*|\d*\.\d+|\d+)>/
-      \ containedin=ALLBUT,pklComment,pklDocComment,pklString,pklMultiString
+      \ containedin=ALLBUT,pklComment,pklDocComment,pklMultiComment,pklHashComment,pklString,pklMultiString,pklRawString,pklRawMultiString
 
 " --- Brackets, operators, functions ---
 syntax match pklBrackets  /[{}\[\]()]/
