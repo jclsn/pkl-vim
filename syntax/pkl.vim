@@ -2,6 +2,8 @@ if exists("b:current_syntax")
   finish
 endif
 
+syntax sync fromstart
+
 " --- Comments ---
 syntax match pklDocComment   /^\s*\/\/\{3}.*/         " Doc comments first (more specific)
 syntax match pklComment      /^\s*\/\/.*/             " Regular comments
