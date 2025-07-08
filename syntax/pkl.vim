@@ -43,8 +43,7 @@ syntax keyword pklObjectTypes Dynamic Typed Pair Any Nothing unknown Regex T
 syntax keyword pklMiscTypes Duration DataSize
 
 " --- Numbers ---
-" syntax match pklNumber /\v(^|[^A-Za-z0-9_])(\d+(\.\d*)?|\.\d+)/ 
-syntax match pklNumber /\v<(\d+\.\d*|\d*\.\d+|\d+)>/
+syntax match pklNumber /\v<0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|(\d+\.\d*|\d*\.\d+|\d+)>/
       \ containedin=ALLBUT,pklComment,pklDocComment,pklString,pklMultiString
 
 " --- Brackets and punctuation ---
