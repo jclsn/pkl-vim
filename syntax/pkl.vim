@@ -18,17 +18,18 @@ syntax region pklMultiString  start=+"""+ skip=+\\."+ end=+"""+ contains=pklEsca
 syntax match pklKeyString /\v(["'])\zs.{-}\ze\1\s*:/
 
 " --- Keywords ---
-syntax keyword pklKeyword      let in match of type implements with object enum return yield static val is outer local hidden function
+syntax keyword pklKeyword      let in match of type implements with object enum return yield static val is outer function
 
 syntax keyword pklBoolean      true false
-syntax keyword pklClass        this final super abstract new
+syntax keyword pklClass        this final super abstract new external
 syntax keyword pklConditional  if else then elif
 syntax keyword pklConstant     null
 syntax keyword pklException    try catch finally throw throws
 syntax keyword pklInclude      module import amends from extends as
+syntax keyword pklPropertyMod  const fixed local hidden
 syntax keyword pklProtected    protected override record delete case switch vararg
 syntax keyword pklRepeat       for while
-syntax keyword pklStruct       class
+syntax keyword pklStruct       class typealias
 
 " --- Types ---
 syntax keyword pklType         UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 String Float Boolean Number
@@ -67,6 +68,7 @@ hi def link pklMultiString    String
 hi def link pklNumber         Number
 hi def link pklObjectTypes    Type
 hi def link pklOperator       Operator
+hi def link pklPropertyMod    StorageClass
 hi def link pklProtected      Special
 hi def link pklRepeat         Repeat
 hi def link pklString         String
