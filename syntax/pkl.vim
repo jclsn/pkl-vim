@@ -21,13 +21,14 @@ syntax region pklMultiString start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscap
 syntax match pklKeyString +\v(["']).{-}\1\s*/+
 
 " --- Keywords ---
-syntax keyword pklKeyword let in match of type implements with object enum interface throws
-      \ try catch finally throw return yield static val is outer local
+syntax keyword pklKeyword let in match of type implements with object enum 
+      \ return yield static val is outer local
       \ hidden function
 
 syntax keyword pklBoolean true false
 syntax keyword pklClass this final super abstract new
 syntax keyword pklConstant null
+syntax keyword pklException try catch finally throw throws
 syntax keyword pklRepeat for while
 syntax keyword pklConditional if else then elif
 syntax keyword pklInclude module import amends from extends as
@@ -63,6 +64,7 @@ hi def link pklConditional    Conditional
 hi def link pklConstant       Constant
 hi def link pklDocComment     Comment
 hi def link pklEscape         SpecialChar
+hi def link pklException      Exception
 hi def link pklFunction       Function
 hi def link pklInclude        Include
 hi def link pklKeyString      Identifier
