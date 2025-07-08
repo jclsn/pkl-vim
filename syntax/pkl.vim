@@ -5,8 +5,8 @@ endif
 syntax sync fromstart
 
 " --- Comments ---
-syntax match pklDocComment   /^\s*\/\/\{3}.*/         " Doc comments first (more specific)
-syntax match pklComment      /^\s*\/\/.*/             " Regular comments
+syntax match pklComment /^\s*\/\{2}\([^\/].*\)\?$/  " Regular comments
+syntax match pklDocComment   /^\s*\/\{3}.*/         " Doc comments first (more specific)
 syntax region pklMultiComment start=/\/\*/ end=/\*\// keepend
 
 " --- Strings ---
