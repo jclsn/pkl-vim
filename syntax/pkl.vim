@@ -7,7 +7,7 @@ endif
 " Regular single-line comments starting with //
 syntax match pklComment  /\/\{2}.*$/
 " Triple-slash documentation comments
-syntax match pklDocComment /^\s*\/\/\/.*$/
+syntax match pklDocComment /\/\{3}.*$/
 
 " --- Strings ---
 " Match strings not followed by colon → regular value string
