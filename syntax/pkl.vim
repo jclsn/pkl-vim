@@ -13,8 +13,13 @@ syntax region pklMultiComment start=/\/\*/ end=/\*\// keepend
 
 " --- Strings ---
 syntax match pklEscape        /\\./ contained
-syntax region pklString       start=+"+ skip=+\\."+ end=+"+ contains=pklEscape keepend oneline
-syntax region pklMultiString  start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape keepend
+syntax match pklHashComment /# \w.*$/ contained containedin=pklRawString,pklRawMultiString
+syntax match pklStringInterpolation /\\#(\([^)]*\))/ contained containedin=pklRawString,pklRawMultiString
+
+syntax region pklMultiString    start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape keepend
+syntax region pklRawMultiString start=+#"""+  end=+"""#+ contains=pklStringInterpolation,pklHashComment keepend
+syntax region pklRawString      start=+#"+ end=+"#+ contains=pklStringInterpolation keepend oneline
+syntax region pklString         start=+\%(\\\)\@<!"+ skip=+\\."+ end=+"+ contains=pklEscape keepend oneline
 
 " --- Object keys ---
 syntax match pklKeyString /\v(["'])\zs.{-}\ze\1\s*:/
@@ -51,34 +56,38 @@ syntax match pklOperator /\v(\.\.|[=:+\-*<>])/
 syntax match pklFunction  /\<\h\w*\>\ze\s*(/
 
 " --- Highlight links ---
-hi def link pklBoolean        Boolean
-hi def link pklBrackets       Delimiter
-hi def link pklClass          Statement
-hi def link pklCollections    Type
-hi def link pklComment        Comment
-hi def link pklConditional    Conditional
-hi def link pklConstant       Constant
-hi def link pklDocComment     Comment
-hi def link pklEscape         SpecialChar
-hi def link pklException      Exception
-hi def link pklFunction       Function
-hi def link pklInclude        Include
-hi def link pklKeyString      Identifier
-hi def link pklKeyword        Keyword
-hi def link pklMiscTypes      Type
-hi def link pklMultiComment   Comment
-hi def link pklMultiString    String
-hi def link pklNumber         Number
-hi def link pklObjectTypes    Type
-hi def link pklOperator       Operator
-hi def link pklPropertyMod    StorageClass
-hi def link pklProtected      Special
-hi def link pklRepeat         Repeat
-hi def link pklSpecial        Special
-hi def link pklStatement      Statement
-hi def link pklString         String
-hi def link pklStruct         Structure
-hi def link pklType           Type
+hi def link pklBoolean                   Boolean
+hi def link pklBrackets                  Delimiter
+hi def link pklClass                     Statement
+hi def link pklCollections               Type
+hi def link pklComment                   Comment
+hi def link pklConditional               Conditional
+hi def link pklConstant                  Constant
+hi def link pklDocComment                Comment
+hi def link pklEscape                    SpecialChar
+hi def link pklException                 Exception
+hi def link pklFunction                  Function
+hi def link pklHashComment               Comment
+hi def link pklInclude                   Include
+hi def link pklKeyString                 Identifier
+hi def link pklKeyword                   Keyword
+hi def link pklMiscTypes                 Type
+hi def link pklMultiComment              Comment
+hi def link pklMultiString               String
+hi def link pklNumber                    Number
+hi def link pklObjectTypes               Type
+hi def link pklOperator                  Operator
+hi def link pklPropertyMod               StorageClass
+hi def link pklProtected                 Special
+hi def link pklRepeat                    Repeat
+hi def link pklSpecial                   Special
+hi def link pklStatement                 Statement
+hi def link pklString                    String
+hi def link pklStringInterpolation       Special
+hi def link pklRawString                 String
+hi def link pklRawMultiString            String
+hi def link pklStruct                    Structure
+hi def link pklType                      Type
 
 let b:current_syntax = "pkl"
 
