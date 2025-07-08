@@ -38,6 +38,7 @@ syntax keyword pklRepeat       for in while
 syntax keyword pklSpecial      nothing
 syntax keyword pklStatement    read return throws trace
 syntax keyword pklStruct       class typealias
+syntax match pklDecorator /@[a-zA-Z]\{1,}/
 
 " --- Types ---
 syntax keyword pklType         UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 String Float Boolean Number
@@ -63,6 +64,7 @@ hi def link pklCollections               Type
 hi def link pklComment                   Comment
 hi def link pklConditional               Conditional
 hi def link pklConstant                  Constant
+hi def link pklDecorator                 Special
 hi def link pklDocComment                Comment
 hi def link pklEscape                    SpecialChar
 hi def link pklException                 Exception
