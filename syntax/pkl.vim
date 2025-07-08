@@ -2,6 +2,8 @@ if exists("b:current_syntax")
   finish
 endif
 
+syntax clear
+
 syntax sync fromstart
 
 " --- Comments ---
@@ -18,25 +20,27 @@ syntax region pklMultiString  start=+"""+ skip=+\\."+ end=+"""+ contains=pklEsca
 syntax match pklKeyString /\v(["'])\zs.{-}\ze\1\s*:/
 
 " --- Keywords ---
-syntax keyword pklKeyword      let in match of type implements with object enum return yield static val is outer function
+syntax keyword pklKeyword      let is function out
 
 syntax keyword pklBoolean      true false
-syntax keyword pklClass        this final super abstract new external
-syntax keyword pklConditional  if else then elif
+syntax keyword pklClass        this final super abstract new external open outer
+syntax keyword pklConditional  if else then elif when
 syntax keyword pklConstant     null
-syntax keyword pklException    try catch finally throw throws
+syntax keyword pklException    try catch finally throw
 syntax keyword pklInclude      module import amends from extends as
 syntax keyword pklPropertyMod  const fixed local hidden
 syntax keyword pklProtected    protected override record delete case switch vararg
-syntax keyword pklRepeat       for while
+syntax keyword pklRepeat       for in while
 syntax keyword pklStruct       class typealias
+syntax keyword pklSpecial      nothing
+syntax keyword pklStatement    read throws return trace
 
 " --- Types ---
 syntax keyword pklType         UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 String Float Boolean Number
 
 syntax keyword pklCollections  List Listing Set Map Mapping
 syntax keyword pklMiscTypes    Duration DataSize
-syntax keyword pklObjectTypes  Dynamic Typed Pair Any Nothing unknown Regex T
+syntax keyword pklObjectTypes  Dynamic Typed Pair Any unknown Regex T
 
 " --- Numbers ---
 syntax match pklNumber /\v<0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|(\d+\.\d*|\d*\.\d+|\d+)>/
@@ -71,6 +75,8 @@ hi def link pklOperator       Operator
 hi def link pklPropertyMod    StorageClass
 hi def link pklProtected      Special
 hi def link pklRepeat         Repeat
+hi def link pklSpecial        Special
+hi def link pklStatement      Statement
 hi def link pklString         String
 hi def link pklStruct         Structure
 hi def link pklType           Type
