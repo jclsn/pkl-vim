@@ -27,12 +27,12 @@ syntax keyword pklKeyword let in match of type implements with object enum
 
 syntax keyword pklBoolean true false
 syntax keyword pklClass this final super abstract new
+syntax keyword pklConditional if else then elif
 syntax keyword pklConstant null
 syntax keyword pklException try catch finally throw throws
-syntax keyword pklRepeat for while
-syntax keyword pklConditional if else then elif
 syntax keyword pklInclude module import amends from extends as
 syntax keyword pklProtected protected override record delete case switch vararg
+syntax keyword pklRepeat for while
 syntax keyword pklStruct class
 
 " --- Data types ---
