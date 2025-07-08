@@ -43,7 +43,7 @@ syntax match pklNumber /\v<0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|(\d+\.\d*|\d
 
 " --- Brackets, operators, functions ---
 syntax match pklBrackets  /[{}\[\]()]/
-syntax match pklOperator  /[=:+\-*<>]/
+syntax match pklOperator /\v(\.\.|[=:+\-*<>])/
 syntax match pklFunction  /\<\h\w*\>\ze\s*(/
 
 " --- Highlight links ---
