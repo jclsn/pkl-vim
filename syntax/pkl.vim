@@ -20,20 +20,19 @@ syntax region pklMultiString  start=+"""+ skip=+\\."+ end=+"""+ contains=pklEsca
 syntax match pklKeyString /\v(["'])\zs.{-}\ze\1\s*:/
 
 " --- Keywords ---
-syntax keyword pklKeyword      let is function out
-
-syntax keyword pklBoolean      true false
-syntax keyword pklClass        this final super abstract new external open outer
-syntax keyword pklConditional  if else then elif when
+syntax keyword pklBoolean      false true
+syntax keyword pklClass        abstract external final new open outer super this
+syntax keyword pklConditional  elif else if then when
 syntax keyword pklConstant     null
-syntax keyword pklException    try catch finally throw
-syntax keyword pklInclude      module import amends from extends as
-syntax keyword pklPropertyMod  const fixed local hidden
-syntax keyword pklProtected    protected override record delete case switch vararg
+syntax keyword pklException    catch finally throw try
+syntax keyword pklInclude      amends as extends from import module
+syntax keyword pklKeyword      function is let out
+syntax keyword pklPropertyMod  const fixed hidden local
+syntax keyword pklProtected    case delete override protected record switch vararg
 syntax keyword pklRepeat       for in while
-syntax keyword pklStruct       class typealias
 syntax keyword pklSpecial      nothing
-syntax keyword pklStatement    read throws return trace
+syntax keyword pklStatement    read return throws trace
+syntax keyword pklStruct       class typealias
 
 " --- Types ---
 syntax keyword pklType         UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 String Float Boolean Number
