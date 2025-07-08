@@ -8,6 +8,8 @@ endif
 syntax match pklComment  /\/\{2}.*$/
 " Triple-slash documentation comments
 syntax match pklDocComment /\/\{3}.*$/
+" Multi-line comments
+syntax region pklMultiComment start=/\/\*/ end=/\*\// keepend
 
 " --- Strings ---
 " Match strings not followed by colon → regular value string
@@ -62,6 +64,7 @@ hi def link pklInclude        Include
 hi def link pklKeyString      Identifier
 hi def link pklKeyword        Keyword
 hi def link pklMiscTypes      Type
+hi def link pklMultiComment   Comment
 hi def link pklNumber         Number
 hi def link pklObjectTypes    Type
 hi def link pklOperator       Operator
