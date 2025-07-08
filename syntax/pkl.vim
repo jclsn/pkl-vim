@@ -4,8 +4,8 @@ if exists("b:current_syntax")
 endif
 
 " --- Comments ---
-" Regular single-line comments starting with #
-syntax match pklComment /#.*$/
+" Regular single-line comments starting with //
+syntax match pklComment  /\/\{2}.*$/
 " Triple-slash documentation comments
 syntax match pklDocComment /^\s*\/\/\/.*$/
 
