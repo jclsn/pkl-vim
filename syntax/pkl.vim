@@ -48,8 +48,16 @@ syntax keyword pklMiscTypes    Duration DataSize
 syntax keyword pklObjectTypes  Dynamic Typed Pair Any unknown Regex T
 
 " --- Numbers ---
-syntax match pklNumber /\v<0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|(\d+\.\d*|\d*\.\d+|\d+)>/
-      \ containedin=ALLBUT,pklComment,pklDocComment,pklMultiComment,pklHashComment,pklString,pklMultiString,pklRawString,pklRawMultiString
+syntax match    pklNumbers    display transparent     "\<\d\|\.\d" contains=pklNumber,pklFloat,pklOctal
+" decimal numbers
+syntax match    pklNumber     display contained       "\d\%(\d\+\)*\>"
+" hex numbers
+syntax match    pklNumber     display contained       "0x\x\%('\=\x\+\)\>"
+" binary numbers
+syntax match    pklNumber     display contained       "0b[01]\%('\=[01]\+\)\>"
+" octal numbers
+syntax match    pklOctal      display contained       "0o\o\+\>" contains=pklOctalZero
+syntax match    pklOctalZero  display contained       "\<0"
 
 " --- Brackets, operators, functions ---
 syntax match pklBrackets  /[{}\[\]()]/
@@ -76,8 +84,11 @@ hi def link pklKeyword                   Keyword
 hi def link pklMiscTypes                 Type
 hi def link pklMultiComment              Comment
 hi def link pklMultiString               String
-hi def link pklNumber                    Number
+hi def link pklNumbers                   Number
+hi def link pklNumber                   Number
 hi def link pklObjectTypes               Type
+hi def link pklOctal                     Number
+hi def link pklOctalZero                 Number
 hi def link pklOperator                  Operator
 hi def link pklPropertyMod               StorageClass
 hi def link pklProtected                 Special
