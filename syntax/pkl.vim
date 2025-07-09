@@ -59,6 +59,13 @@ syntax match    pklNumber     display contained       "0b[01]\%('\=[01]\+\)\>"
 syntax match    pklOctal      display contained       "0o\o\+\>" contains=pklOctalZero
 syntax match    pklOctalZero  display contained       "\<0"
 
+"floating point number, with dot, optional exponent
+syntax match	pklFloat      display contained       "\d\+\.\d*\%(e[-+]\=\d\+\)\="
+"floating point number, starting with a dot, optional exponent
+syntax match	pklFloat      display contained       "\.\d\+\%(e[-+]\=\d\+\)\=\>"
+"floating point number, without dot, with exponent
+syntax match	pklFloat      display contained       "\d\+e[-+]\=\d\+\>"
+
 " --- Brackets, operators, functions ---
 syntax match pklBrackets  /[{}\[\]()]/
 syntax match pklOperator /\v(\.\.|[=:+\-*<>])/
@@ -77,6 +84,7 @@ hi def link pklDocComment                Comment
 hi def link pklEscape                    SpecialChar
 hi def link pklException                 Exception
 hi def link pklFunction                  Function
+hi def link pklFloat                     Number
 hi def link pklHashComment               Comment
 hi def link pklInclude                   Include
 hi def link pklKeyString                 Identifier
