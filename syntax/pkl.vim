@@ -112,7 +112,6 @@ syn region	pklParen	matchgroup=pklBrackets start='(' end=')' contains=ALL
 syn region	pklBracket	matchgroup=pklBrackets start='\[\|<::\@!' end=']\|:>' contains=ALL
 syn region	pklBlock	matchgroup=pklBrackets start="{" end="}" contains=ALL fold
 
-syn match	pklOperator	"\v(\.\.|[=:+\-*<>])"
 syn match	pklFunction	"\<\h\w*\>\ze\s*("
 
 " --- Highlight links ---
@@ -140,7 +139,6 @@ hi def link	pklNumbers                       Number
 hi def link	pklObjectTypes                   Type
 hi def link	pklOctal                         Number
 hi def link	pklOctalZero                     Number
-hi def link	pklOperator                      Operator
 hi def link	pklPropertyMod                   StorageClass
 hi def link	pklProtected                     Special
 hi def link	pklRepeat                        Repeat
