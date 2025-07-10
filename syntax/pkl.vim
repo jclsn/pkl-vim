@@ -2,75 +2,75 @@ if exists("b:current_syntax")
   finish
 endif
 
-syntax	clear
-syntax	sync fromstart
+syn	clear
+syn	sync fromstart
 
-syntax	region	pklShebang		start="^\s*#!" end="$" keepend contains=@Nothing oneline
+syn	region	pklShebang		start="^\s*#!" end="$" keepend contains=@Nothing oneline
 
 " --- Comments ---
-syntax	match	pklComment		"^\s*\/\{2}\([^\/].*\)\?$"
-syntax	match	pklDocComment	"^\s*\/\{3}.*"
-syntax	region	pklMultiComment	start="\/\*" end="\*\/" keepend fold
+syn	match	pklComment		"^\s*\/\{2}\([^\/].*\)\?$"
+syn	match	pklDocComment	"^\s*\/\{3}.*"
+syn	region	pklMultiComment	start="\/\*" end="\*\/" keepend fold
 
 " --- Strings ---
-syntax	region	pklString		start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=pklEscape,pklUnicodeEscape keepend oneline
-syntax	region	pklMultiString	start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape,pklUnicodeEscape keepend fold
-syntax	match	pklEscape		"\\[\\nt0rbaeuf"']\?" contained containedin=pklString,pklMultiString
-syntax	match	pklUnicode		"[0-9A-Fa-f]\+" contained
+syn	region	pklString		start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=pklEscape,pklUnicodeEscape keepend oneline
+syn	region	pklMultiString	start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape,pklUnicodeEscape keepend fold
+syn	match	pklEscape		"\\[\\nt0rbaeuf"']\?" contained containedin=pklString,pklMultiString
+syn	match	pklUnicode		"[0-9A-Fa-f]\+" contained
 
 " --- String interpolation---
 " Identifiers inside interpolation brackets/parens
-syntax	match	pklIdentifier	"\<[A-Za-z_][A-Za-z0-9_]*\>" contained
-syntax	match	pklIdentifier	"\v\#[a-zA-Z]\{\zs[^\}]*\ze\}" contained
+syn	match	pklIdentifier	"\<[A-Za-z_][A-Za-z0-9_]*\>" contained
+syn	match	pklIdentifier	"\v\#[a-zA-Z]\{\zs[^\}]*\ze\}" contained
 
 " Standard interpolation
-syntax	region	pklStringInterpolation
+syn	region	pklStringInterpolation
 	  \ start=+\\(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier
 	  \ contained containedin=pklString,pklMultiString
 " Unicode escape sequences
-syntax	region	pklUnicodeEscape
+syn	region	pklUnicodeEscape
 	  \ start=+\\u{+ end=+}+ contains=pklUnicode
 	  \ contained containedin=pklString,pklMultiString
 
 " -- Custom string delimiters ---
 for x in range(1, 20)
-  exe $'syntax region pklMultiString{x}Pound	start=+' .. repeat("#", x) .. $'"""+  end=+"""{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend fold'
+  exe $'syn region pklMultiString{x}Pound	start=+' .. repeat("#", x) .. $'"""+  end=+"""{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend fold'
   exe $'hi def link pklMultiString{x}Pound String'
 
-  exe $'syntax region pklString{x}Pound	start=+' .. repeat("#", x) .. $'"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend oneline'
+  exe $'syn region pklString{x}Pound	start=+' .. repeat("#", x) .. $'"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend oneline'
   exe $'hi def link pklString{x}Pound String'
 
-  exe $'syntax match pklEscape{x}Pound "\\' .. repeat("#", x) .. $'[\\nt0rbaeuf"'']\?" contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+  exe $'syn match pklEscape{x}Pound "\\' .. repeat("#", x) .. $'[\\nt0rbaeuf"'']\?" contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
   exe $'hi def link pklEscape{x}Pound SpecialChar'
 
-  exe $'syntax region pklStringInterpolation{x}Pound start=+\\' .. repeat("#", x) .. $'(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+  exe $'syn region pklStringInterpolation{x}Pound start=+\\' .. repeat("#", x) .. $'(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
   exe $'hi def link pklStringInterpolation{x}Pound Delimiter'
 
-  exe $'syntax region pklUnicodeEscape{x}Pound start=+\\' .. repeat("#", x) .. 'u{+ end=+}+' .. $' contains=pklUnicode contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+  exe $'syn region pklUnicodeEscape{x}Pound start=+\\' .. repeat("#", x) .. 'u{+ end=+}+' .. $' contains=pklUnicode contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
   exe $'hi def link pklUnicodeEscape{x}Pound SpecialChar'
 endfor
 
 " " --- Object keys ---
-syntax	match	  pklKeyString		"\v(["'])\zs.{-}\ze\1\s*:"
+syn	match	  pklKeyString		"\v(["'])\zs.{-}\ze\1\s*:"
 
 " --- Keywords ---
-syntax	keyword	  pklBoolean		false true
-syntax	keyword	  pklClass			abstract external final new open outer super this
-syntax	keyword	  pklConditional	elif else if then when
-syntax	keyword	  pklConstant		null
-syntax	keyword	  pklException		catch finally throw try
-syntax	keyword	  pklInclude		amends as extends from import module
-syntax	keyword	  pklKeyword		function is let out
-syntax	keyword	  pklPropertyMod	const fixed hidden local
-syntax	keyword	  pklProtected		case delete override protected record switch vararg
-syntax	keyword	  pklRepeat			for in while
-syntax	keyword	  pklSpecial		nothing
-syntax	keyword	  pklStatement		read return throws trace
-syntax	keyword	  pklStruct			class typealias
-syntax	match	  pklDecorator		"@[a-zA-Z]\{1,}"
+syn	keyword	  pklBoolean		false true
+syn	keyword	  pklClass			abstract external final new open outer super this
+syn	keyword	  pklConditional	elif else if then when
+syn	keyword	  pklConstant		null
+syn	keyword	  pklException		catch finally throw try
+syn	keyword	  pklInclude		amends as extends from import module
+syn	keyword	  pklKeyword		function is let out
+syn	keyword	  pklPropertyMod	const fixed hidden local
+syn	keyword	  pklProtected		case delete override protected record switch vararg
+syn	keyword	  pklRepeat			for in while
+syn	keyword	  pklSpecial		nothing
+syn	keyword	  pklStatement		read return throws trace
+syn	keyword	  pklStruct			class typealias
+syn	match	  pklDecorator		"@[a-zA-Z]\{1,}"
 
 " --- Types ---
-syntax	keyword	  pklType
+syn	keyword	  pklType
 	  \ UInt UInt8 UInt16 UInt32 UInt64 UInt128
 	  \ Int Int8 Int16 Int32 Int64 Int128
 	  \ String
@@ -78,39 +78,39 @@ syntax	keyword	  pklType
 	  \ Boolean
 	  \ Number
 
-syntax	keyword	  pklCollections
+syn	keyword	  pklCollections
 	  \ List Listing
 	  \ Map Mapping
 	  \ Set
-syntax	keyword	  pklMiscTypes		Duration DataSize
-syntax	keyword	  pklObjectTypes	Dynamic Typed Pair Any unknown Regex T
+syn	keyword	  pklMiscTypes		Duration DataSize
+syn	keyword	  pklObjectTypes	Dynamic Typed Pair Any unknown Regex T
 
 " --- Numbers ---
 " decimal numbers
-syntax	match	pklNumbers		display transparent	  "\<\d\|\.\d" contains=pklNumber,pklFloat,pklOctal
+syn	match	pklNumbers		display transparent	  "\<\d\|\.\d" contains=pklNumber,pklFloat,pklOctal
 " hex numbers
-syntax	match	pklNumber		display contained	  "\d\%(\d\+\)*\>"
-syntax	match	pklNumber		display contained	  "0x\x\%('\=\x\+\)\>"
+syn	match	pklNumber		display contained	  "\d\%(\d\+\)*\>"
+syn	match	pklNumber		display contained	  "0x\x\%('\=\x\+\)\>"
 " binary numbers
-syntax	match	pklNumber		display contained	  "0b[01]\%('\=[01]\+\)\>"
+syn	match	pklNumber		display contained	  "0b[01]\%('\=[01]\+\)\>"
 " octal numbers
-syntax	match	pklOctal		display contained	  "0o\o\+\>" contains=pklOctalZero
-syntax	match	pklOctalZero	display contained	  "\<0"
+syn	match	pklOctal		display contained	  "0o\o\+\>" contains=pklOctalZero
+syn	match	pklOctalZero	display contained	  "\<0"
 
 "floating point number, with dot, optional exponent
-syntax	match	pklFloat		display contained	  "\d\+\.\d*\%(e[-+]\=\d\+\)\="
+syn	match	pklFloat		display contained	  "\d\+\.\d*\%(e[-+]\=\d\+\)\="
 "floating point number, starting with a dot, optional exponent
-syntax	match	pklFloat		display contained	  "\.\d\+\%(e[-+]\=\d\+\)\=\>"
+syn	match	pklFloat		display contained	  "\.\d\+\%(e[-+]\=\d\+\)\=\>"
 "floating point number, without dot, with exponent
-syntax	match	pklFloat		display contained	  "\d\+e[-+]\=\d\+\>"
+syn	match	pklFloat		display contained	  "\d\+e[-+]\=\d\+\>"
 
 " --- Brackets, operators, functions ---
-syntax	region	pklParen	start='(' end=')'				contains=ALL
-syntax	region	pklBracket	start='\[\|<::\@!' end=']\|:>'	contains=ALL
-syntax	region	pklBlock	start="{" end="}"				contains=ALL fold
+syn	region	pklParen	start='(' end=')'				contains=ALL
+syn	region	pklBracket	start='\[\|<::\@!' end=']\|:>'	contains=ALL
+syn	region	pklBlock	start="{" end="}"				contains=ALL fold
 
-syntax	match	pklOperator "\v(\.\.|[=:+\-*<>])"
-syntax	match	pklFunction  "\<\h\w*\>\ze\s*("
+syn	match	pklOperator "\v(\.\.|[=:+\-*<>])"
+syn	match	pklFunction  "\<\h\w*\>\ze\s*("
 
 " --- Highlight links ---
 hi def link pklBlock					Delimiter
