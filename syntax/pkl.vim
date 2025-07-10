@@ -13,7 +13,7 @@ syn	match	pklDocComment	"^\s*\/\{3}.*"
 syn	region	pklMultiComment	start="\/\*" end="\*\/" keepend fold
 
 " --- Strings ---
-syn	region	pklString		start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=pklEscape,pklUnicodeEscape keepend oneline
+syn	region	pklString		start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=pklEscape,pklUnicodeEscape,pklStringInterpolation oneline 
 syn	region	pklMultiString	start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape,pklUnicodeEscape keepend fold
 syn	match	pklEscape		"\\[\\nt0rbaeuf"']\?" contained containedin=pklString,pklMultiString
 syn	match	pklUnicode		"[0-9A-Fa-f]\+" contained
@@ -24,9 +24,9 @@ syn	match	pklIdentifier	"\<[A-Za-z_][A-Za-z0-9_]*\>" contained
 syn	match	pklIdentifier	"\v\#[a-zA-Z]\{\zs[^\}]*\ze\}" contained
 
 " Standard interpolation
-syn	region	pklStringInterpolation
-	  \ start=+\\(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier
-	  \ contained containedin=pklString,pklMultiString
+syn	region	pklStringInterpolation matchgroup=pklStringInterpolationDelimiter
+	  \ start=+\\(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier,pklFunction,pklParen,pklString
+	  \ contained containedin=pklString,pklMultiString oneline
 " Unicode escape sequences
 syn	region	pklUnicodeEscape
 	  \ start=+\\u{+ end=+}+ contains=pklUnicode
@@ -37,14 +37,15 @@ for x in range(1, 20)
   exe $'syn region pklMultiString{x}Pound	start=+' .. repeat("#", x) .. $'"""+  end=+"""{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend fold'
   exe $'hi def link pklMultiString{x}Pound String'
 
-  exe $'syn region pklString{x}Pound	start=+' .. repeat("#", x) .. $'"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend oneline'
+  exe $'syn region pklString{x}Pound	start=+' .. repeat("#", x) .. $'"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound oneline'
   exe $'hi def link pklString{x}Pound String'
 
   exe $'syn match pklEscape{x}Pound "\\' .. repeat("#", x) .. $'[\\nt0rbaeuf"'']\?" contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
   exe $'hi def link pklEscape{x}Pound SpecialChar'
 
-  exe $'syn region pklStringInterpolation{x}Pound start=+\\' .. repeat("#", x) .. $'(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+  exe $'syn region pklStringInterpolation{x}Pound matchgroup=pklStringInterpolationDelimiter{x}Pound start=+\\' .. repeat("#", x) .. $'(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier,pklFunction,pklParen,pklString contained containedin=pklString{x}Pound,pklMultiString{x}Pound oneline'
   exe $'hi def link pklStringInterpolation{x}Pound Delimiter'
+  exe $'hi def link pklStringInterpolationDelimiter{x}Pound Delimiter'
 
   exe $'syn region pklUnicodeEscape{x}Pound start=+\\' .. repeat("#", x) .. 'u{+ end=+}+' .. $' contains=pklUnicode contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
   exe $'hi def link pklUnicodeEscape{x}Pound SpecialChar'
@@ -147,9 +148,10 @@ hi def link pklShebang					Comment
 hi def link pklSpecial					Special
 hi def link pklStatement				Statement
 hi def link pklString					String
-hi def link pklStringInterpolation		Delimiter
+hi def link pklStringInterpolation			Delimiter
+hi def link pklStringInterpolationDelimiter		Delimiter
 hi def link pklStruct					Structure
-hi def link pklType						Type
-hi def link pklUnicodeEscape			SpecialChar
+hi def link pklType					Type
+hi def link pklUnicodeEscape				SpecialChar
 
 let b:current_syntax = "pkl"
