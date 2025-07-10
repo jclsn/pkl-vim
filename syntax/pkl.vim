@@ -5,6 +5,8 @@ endif
 syntax clear
 syntax sync fromstart
 
+syntax region pklShebang start=/^\s*#!/ end=/$/ keepend contains=@Nothing oneline
+
 " --- Comments ---
 syntax match pklComment /^\s*\/\{2}\([^\/].*\)\?$/  " Regular comments
 syntax match pklDocComment   /^\s*\/\{3}.*/         " Doc comments first (more specific)
@@ -159,6 +161,7 @@ hi def link pklPropertyMod               StorageClass
 hi def link pklProtected                 Special
 hi def link pklRepeat                    Repeat
 hi def link pklSpecial                   Special
+hi def link pklShebang                   Comment
 hi def link pklStatement                 Statement
 hi def link pklStruct                    Structure
 hi def link pklType                      Type
