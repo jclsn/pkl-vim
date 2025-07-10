@@ -122,9 +122,9 @@ syntax match	pklFloat      display contained       "\d\+e[-+]\=\d\+\>"
 
 " --- Brackets, operators, functions ---
 " syntax match pklBrackets  /[{}\[\]()]/
-syntax region	pklParen		start='(' end=')' contains=ALLBUT,pklString
-syntax region	pklBracket      start='\[\|<::\@!' end=']\|:>' end='}'me=s-1 contains=ALLBUT,pklString
-syntax region	pklBlock		start="{" end="}" contains=ALLBUT,pklString
+syntax region	pklParen		start='(' end=')' contains=ALL
+syntax region	pklBracket      start='\[\|<::\@!' end=']\|:>' contains=ALL
+syntax region	pklBlock		start="{" end="}" contains=ALL
 
 syntax match pklOperator /\v(\.\.|[=:+\-*<>])/
 syntax match pklFunction  /\<\h\w*\>\ze\s*(/
@@ -132,7 +132,7 @@ syntax match pklFunction  /\<\h\w*\>\ze\s*(/
 " --- Highlight links ---
 hi def link pklBlock                     Delimiter
 hi def link pklBoolean                   Boolean
-hi def link pklBrackets                  Delimiter
+hi def link pklBracket                   Delimiter
 hi def link pklClass                     Statement
 hi def link pklCollections               Type
 hi def link pklComment                   Comment
