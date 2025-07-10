@@ -8,13 +8,13 @@ syntax sync fromstart
 syntax region pklShebang start=/^\s*#!/ end=/$/ keepend contains=@Nothing oneline
 
 " --- Comments ---
-syntax match pklComment /^\s*\/\{2}\([^\/].*\)\?$/  " Regular comments
-syntax match pklDocComment   /^\s*\/\{3}.*/         " Doc comments first (more specific)
-syntax region pklMultiComment start=/\/\*/ end=/\*\// keepend
+syntax match  pklComment	/^\s*\/\{2}\([^\/].*\)\?$/
+syntax match  pklDocComment	/^\s*\/\{3}.*/
+syntax region pklMultiComment	start=/\/\*/ end=/\*\// keepend fold
 
 " --- Strings ---
 syntax region pklString	 start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=pklEscape,pklUnicodeEscape keepend oneline
-syntax region pklMultiString start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape,pklUnicodeEscape keepend
+syntax region pklMultiString start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape,pklUnicodeEscape keepend fold
 syntax match pklEscape "\\[\\nt0rbaeuf"']\?" contained containedin=pklString,pklMultiString
 syntax match pklUnicode /[0-9A-Fa-f]\+/ contained
 
@@ -34,7 +34,7 @@ syntax region pklUnicodeEscape
 
 " -- Custom string delimiters ---
 for x in range(1, 20)
-    exe $'syntax region pklMultiString{x}Pound  start=+' .. repeat("#", x) .. $'"""+  end=+"""{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend'
+    exe $'syntax region pklMultiString{x}Pound  start=+' .. repeat("#", x) .. $'"""+  end=+"""{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend fold'
     exe $'hi def link pklMultiString{x}Pound String'
 
     exe $'syntax region pklString{x}Pound   start=+' .. repeat("#", x) .. $'"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend oneline'
@@ -96,10 +96,9 @@ syntax match	pklFloat      display contained       "\.\d\+\%(e[-+]\=\d\+\)\=\>"
 syntax match	pklFloat      display contained       "\d\+e[-+]\=\d\+\>"
 
 " --- Brackets, operators, functions ---
-" syntax match pklBrackets  /[{}\[\]()]/
-syntax region	pklParen		start='(' end=')' contains=ALL
-syntax region	pklBracket      start='\[\|<::\@!' end=']\|:>' contains=ALL
-syntax region	pklBlock		start="{" end="}" contains=ALL
+syntax region	pklParen	start='(' end=')' contains=ALL
+syntax region	pklBracket	start='\[\|<::\@!' end=']\|:>' contains=ALL
+syntax region	pklBlock	start="{" end="}" contains=ALL fold
 
 syntax match pklOperator /\v(\.\.|[=:+\-*<>])/
 syntax match pklFunction  /\<\h\w*\>\ze\s*(/
