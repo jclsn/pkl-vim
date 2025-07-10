@@ -108,17 +108,16 @@ syn match	pklFloat	display contained "\.\d\+\%(e[-+]\=\d\+\)\=\>"
 syn match	pklFloat	display contained "\d\+e[-+]\=\d\+\>"
 
 " --- Brackets, operators, functions ---
-syn region	pklParen	start='(' end=')' contains=ALL
-syn region	pklBracket	start='\[\|<::\@!' end=']\|:>' contains=ALL
-syn region	pklBlock	start="{" end="}" contains=ALL fold
+syn region	pklParen	matchgroup=pklBrackets start='(' end=')' contains=ALL
+syn region	pklBracket	matchgroup=pklBrackets start='\[\|<::\@!' end=']\|:>' contains=ALL
+syn region	pklBlock	matchgroup=pklBrackets start="{" end="}" contains=ALL fold
 
 syn match	pklOperator	"\v(\.\.|[=:+\-*<>])"
 syn match	pklFunction	"\<\h\w*\>\ze\s*("
 
 " --- Highlight links ---
-hi def link	pklBlock                         Delimiter
 hi def link	pklBoolean                       Boolean
-hi def link	pklBracket                       Delimiter
+hi def link	pklBrackets                      Delimiter
 hi def link	pklClass                         Statement
 hi def link	pklCollections                   Type
 hi def link	pklComment                       Comment
@@ -142,7 +141,6 @@ hi def link	pklObjectTypes                   Type
 hi def link	pklOctal                         Number
 hi def link	pklOctalZero                     Number
 hi def link	pklOperator                      Operator
-hi def link	pklParen                         Delimiter
 hi def link	pklPropertyMod                   StorageClass
 hi def link	pklProtected                     Special
 hi def link	pklRepeat                        Repeat
