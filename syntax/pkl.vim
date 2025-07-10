@@ -5,18 +5,18 @@ endif
 syntax clear
 syntax sync fromstart
 
-syntax region pklShebang start=/^\s*#!/ end=/$/ keepend contains=@Nothing oneline
+syntax region pklShebang start="^\s*#!" end="$" keepend contains=@Nothing oneline
 
 " --- Comments ---
-syntax match  pklComment	/^\s*\/\{2}\([^\/].*\)\?$/
-syntax match  pklDocComment	/^\s*\/\{3}.*/
-syntax region pklMultiComment	start=/\/\*/ end=/\*\// keepend fold
+syntax match  pklComment	"^\s*\/\{2}\([^\/].*\)\?$"
+syntax match  pklDocComment	"^\s*\/\{3}.*"
+syntax region pklMultiComment	start="\/\*" end="\*\/" keepend fold
 
 " --- Strings ---
 syntax region pklString	 start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=pklEscape,pklUnicodeEscape keepend oneline
 syntax region pklMultiString start=+"""+ skip=+\\."+ end=+"""+ contains=pklEscape,pklUnicodeEscape keepend fold
 syntax match pklEscape "\\[\\nt0rbaeuf"']\?" contained containedin=pklString,pklMultiString
-syntax match pklUnicode /[0-9A-Fa-f]\+/ contained
+syntax match pklUnicode "[0-9A-Fa-f]\+" contained
 
 " --- String interpolation---
 " Identifiers inside interpolation brackets/parens
@@ -51,7 +51,7 @@ for x in range(1, 20)
 endfor
 
 " " --- Object keys ---
-syntax match pklKeyString /\v(["'])\zs.{-}\ze\1\s*:/
+syntax match pklKeyString "\v(["'])\zs.{-}\ze\1\s*:"
 
 " --- Keywords ---
 syntax keyword pklBoolean      false true
@@ -67,7 +67,7 @@ syntax keyword pklRepeat       for in while
 syntax keyword pklSpecial      nothing
 syntax keyword pklStatement    read return throws trace
 syntax keyword pklStruct       class typealias
-syntax match pklDecorator /@[a-zA-Z]\{1,}/
+syntax match pklDecorator "@[a-zA-Z]\{1,}"
 
 " --- Types ---
 syntax keyword pklType         UInt UInt8 UInt16 UInt32 UInt64 UInt128 Int Int8 Int16 Int32 Int64 Int128 String Float Boolean Number
@@ -100,8 +100,8 @@ syntax region	pklParen	start='(' end=')' contains=ALL
 syntax region	pklBracket	start='\[\|<::\@!' end=']\|:>' contains=ALL
 syntax region	pklBlock	start="{" end="}" contains=ALL fold
 
-syntax match pklOperator /\v(\.\.|[=:+\-*<>])/
-syntax match pklFunction  /\<\h\w*\>\ze\s*(/
+syntax match pklOperator "\v(\.\.|[=:+\-*<>])"
+syntax match pklFunction  "\<\h\w*\>\ze\s*("
 
 " --- Highlight links ---
 hi def link pklBlock                     Delimiter
