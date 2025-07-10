@@ -33,51 +33,24 @@ syntax region pklUnicodeEscape
       \ contained containedin=pklString,pklMultiString
 
 " -- Custom string delimiters ---
-" One pound
-syntax region pklMultiStringOnePound  start=+#"""+  end=+"""#+ contains=pklStringInterpolationOnePound,pklEscapeOnePound keepend
-syntax region pklStringOnePound   start=+#"+ end=+"#+ contains=pklStringInterpolationOnePound,pklEscapeOnePound keepend oneline
-syntax match pklEscapeOnePound "\\#[\\nt0rbaeuf"']\?" contained containedin=pklStringOnePound,pklMultiStringOnePound
-syntax region pklStringInterpolationOnePound
-      \ start=+\\#(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier
-      \ contained containedin=pklStringOnePound,pklMultiStringOnePound
-syntax region pklUnicodeEscapeOnePound
-      \ start=+\\#u{+ end=+}+ contains=pklUnicode
-      \ contained containedin=pklStringOnePound,pklMultiStringOnePound
+for x in range(1, 20)
+    exe $'syntax region pklMultiString{x}Pound  start=+' .. repeat("#", x) .. $'"""+  end=+"""{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend'
+    exe $'hi def link pklMultiString{x}Pound String'
 
-" Two pounds
-syntax region pklMultiStringTwoPounds  start=+##"""+  end=+"""##+ contains=pklStringInterpolationTwoPounds,pklEscapeTwoPounds keepend
-syntax region pklStringTwoPounds   start=+##"+ end=+"##+ contains=pklStringInterpolationTwoPounds,pklEscapeTwoPounds keepend oneline
-syntax match pklEscapeTwoPounds "\\##[\\nt0rbaeuf"']\?" contained containedin=pklStringTwoPounds,pklMultiStringTwoPounds
-syntax region pklStringInterpolationTwoPounds
-      \ start=+\\##(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier
-      \ contained containedin=pklStringTwoPounds,pklMultiStringTwoPounds
-syntax region pklUnicodeEscapeTwoPounds
-      \ start=+\\##u{+ end=+}+ contains=pklUnicode
-      \ contained containedin=pklStringTwoPounds,pklMultiStringTwoPounds
+    exe $'syntax region pklString{x}Pound   start=+' .. repeat("#", x) .. $'"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend oneline'
+    exe $'hi def link pklString{x}Pound String'
 
-" Three pounds
-syntax region pklMultiStringThreePounds  start=+###"""+  end=+"""###+ contains=pklStringInterpolationThreePounds,pklEscapeThreePounds keepend
-syntax region pklStringThreePounds   start=+###"+ end=+"###+ contains=pklStringInterpolationThreePounds,pklEscapeThreePounds keepend oneline
-syntax match pklEscapeThreePounds "\\###[\\nt0rbaeuf"']\?" contained containedin=pklStringThreePounds,pklMultiStringThreePounds
-syntax region pklStringInterpolationThreePounds
-      \ start=+\\###(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier
-      \ contained containedin=pklStringThreePounds,pklMultiStringThreePounds
-syntax region pklUnicodeEscapeThreePounds
-      \ start=+\\###u{+ end=+}+ contains=pklUnicode
-      \ contained containedin=pklStringThreePounds,pklMultiStringThreePounds
+    exe $'syntax match pklEscape{x}Pound "\\' .. repeat("#", x) .. $'[\\nt0rbaeuf"'']\?" contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+    exe $'hi def link pklEscape{x}Pound SpecialChar'
 
-" Four pounds
-syntax region pklMultiStringFourPounds  start=+####"""+  end=+"""####+ contains=pklStringInterpolationFourPounds,pklEscapeFourPounds keepend
-syntax region pklStringFourPounds   start=+####"+ end=+"####+ contains=pklStringInterpolationFourPounds,pklEscapeFourPounds keepend oneline
-syntax match pklEscapeFourPounds "\\####[\\nt0rbaeuf"']\?" contained containedin=pklStringFourPounds,pklMultiStringFourPounds
-syntax region pklStringInterpolationFourPounds
-      \ start=+\\####(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier
-      \ contained containedin=pklStringFourPounds,pklMultiStringFourPounds
-syntax region pklUnicodeEscapeFourPounds
-      \ start=+\\####u{+ end=+}+ contains=pklUnicode
-      \ contained containedin=pklStringFourPounds,pklMultiStringFourPounds
+    exe $'syntax region pklStringInterpolation{x}Pound start=+\\' .. repeat("#", x) .. $'(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+    exe $'hi def link pklStringInterpolation{x}Pound Delimiter'
 
-" --- Object keys ---
+    exe $'syntax region pklUnicodeEscape{x}Pound start=+\\' .. repeat("#", x) .. 'u{+ end=+}+' .. $' contains=pklUnicode contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+    exe $'hi def link pklUnicodeEscape{x}Pound SpecialChar'
+endfor
+
+" " --- Object keys ---
 syntax match pklKeyString /\v(["'])\zs.{-}\ze\1\s*:/
 
 " --- Keywords ---
@@ -142,6 +115,7 @@ hi def link pklConditional               Conditional
 hi def link pklConstant                  Constant
 hi def link pklDecorator                 Special
 hi def link pklDocComment                Comment
+hi def link pklEscape                    SpecialChar
 hi def link pklException                 Exception
 hi def link pklFloat                     Number
 hi def link pklFunction                  Function
@@ -150,6 +124,7 @@ hi def link pklKeyString                 Identifier
 hi def link pklKeyword                   Keyword
 hi def link pklMiscTypes                 Type
 hi def link pklMultiComment              Comment
+hi def link pklMultiString               String
 hi def link pklNumber                    Number
 hi def link pklNumbers                   Number
 hi def link pklObjectTypes               Type
@@ -160,56 +135,13 @@ hi def link pklParen                     Delimiter
 hi def link pklPropertyMod               StorageClass
 hi def link pklProtected                 Special
 hi def link pklRepeat                    Repeat
-hi def link pklSpecial                   Special
 hi def link pklShebang                   Comment
+hi def link pklSpecial                   Special
 hi def link pklStatement                 Statement
+hi def link pklString                    String
+hi def link pklStringInterpolation       Delimiter
 hi def link pklStruct                    Structure
 hi def link pklType                      Type
-
-" Strings
-let s:string_group = split('
-      \ pklString
-      \ pklStringOnePound
-      \ pklStringTwoPounds
-      \ pklStringThreePounds
-      \ pklStringFourPounds
-      \ ')
-for string in s:string_group
-  execute 'hi def link ' . string . ' String'
-endfor
-
-let s:string_group = split('
-      \ pklMultiString
-      \ pklMultiStringOnePound
-      \ pklMultiStringTwoPounds
-      \ pklMultiStringThreePounds
-      \ pklMultiStringFourPounds
-      \')
-for string in s:string_group
-  execute 'hi def link ' . string . ' String'
-endfor
-
-let s:delimiter_group = split('
-      \ pklStringInterpolation             
-      \ pklStringInterpolationOnePound    
-      \ pklStringInterpolationTwoPounds  
-      \ pklStringInterpolationThreePounds
-      \ pklStringInterpolationFourPounds
-      \')
-for delimiter in s:delimiter_group
-  execute 'hi def link ' . delimiter . ' Delimiter'
-endfor
-
-let s:escape_group = split('
-      \ pklEscape             pklUnicodeEscape 
-      \ pklEscapeOnePound     pklUnicodeEscapeOnePound
-      \ pklEscapeTwoPounds    pklUnicodeEscapeTwoPounds
-      \ pklEscapeThreePounds  pklUnicodeEscapeThreePounds 
-      \ pklEscapeFourPounds   pklUnicodeEscapeFourPounds
-      \')
-for escape in s:escape_group
-  execute 'hi def link ' . escape . ' SpecialChar'
-endfor
+hi def link pklUnicodeEscape             SpecialChar
 
 let b:current_syntax = "pkl"
-
