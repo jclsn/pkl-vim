@@ -35,20 +35,20 @@ syn region	pklUnicodeEscape
 
 " -- Custom string delimiters ---
 for x in range(1, 5)
-  exe $'syn region pklString{x}Pound	start=+' .. repeat("#", x) .. $'"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound oneline'
+  exe $'syn region pklString{x}Pound	start=+{repeat("#", x)}"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound oneline'
   exe $'hi def link pklString{x}Pound String'
 
-  exe $'syn region pklMultiString{x}Pound	start=+' .. repeat("#", x) .. $'"""+  end=+"""{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend fold'
+  exe $'syn region pklMultiString{x}Pound	start=+{repeat("#", x)}"""+  end=+"""{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound keepend fold'
   exe $'hi def link pklMultiString{x}Pound String'
 
-  exe $'syn match pklEscape{x}Pound "\\' .. repeat("#", x) .. $'[\\nt0rbaeuf"'']\?" contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+  exe $'syn match pklEscape{x}Pound "\\{repeat("#", x) }[\\nt0rbaeuf"'']\?" contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
   exe $'hi def link pklEscape{x}Pound SpecialChar'
 
-  exe $'syn region pklStringInterpolation{x}Pound matchgroup=pklStringInterpolationDelimiter{x}Pound start=+\\' .. repeat("#", x) .. $'(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier,pklFunction,pklParen,pklString contained containedin=pklString{x}Pound,pklMultiString{x}Pound oneline'
+  exe $'syn region pklStringInterpolation{x}Pound matchgroup=pklStringInterpolationDelimiter{x}Pound start=+\\{repeat("#", x)}(+ end=+)+ contains=pklNumbers,pklOperator,pklIdentifier,pklFunction,pklParen,pklString contained containedin=pklString{x}Pound,pklMultiString{x}Pound oneline'
   exe $'hi def link pklStringInterpolation{x}Pound Delimiter'
   exe $'hi def link pklStringInterpolationDelimiter{x}Pound Delimiter'
 
-  exe $'syn region pklUnicodeEscape{x}Pound start=+\\' .. repeat("#", x) .. 'u{+ end=+}+' .. $' contains=pklUnicode contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
+  exe $'syn region pklUnicodeEscape{x}Pound start=+\\{repeat("#", x)}u{{+ end=+}}+ contains=pklUnicode contained containedin=pklString{x}Pound,pklMultiString{x}Pound'
   exe $'hi def link pklUnicodeEscape{x}Pound SpecialChar'
 endfor
 
