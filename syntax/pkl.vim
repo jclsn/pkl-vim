@@ -34,7 +34,7 @@ syn region	pklUnicodeEscape
 	  \ contained containedin=pklString,pklMultiString
 
 " -- Custom string delimiters ---
-for x in range(1, 20)
+for x in range(1, 5)
   exe $'syn region pklString{x}Pound	start=+' .. repeat("#", x) .. $'"+ end=+"{repeat("#", x)}+ contains=pklStringInterpolation{x}Pound,pklEscape{x}Pound oneline'
   exe $'hi def link pklString{x}Pound String'
 
